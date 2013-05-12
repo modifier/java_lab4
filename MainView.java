@@ -8,6 +8,8 @@
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,9 +76,8 @@ public class MainView {
     }
 
     public void setXValues(float[] values) {
-        xlist = new XList(values, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        xlist = new XList(values, new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
                 newDots();
             }
         });
@@ -96,10 +97,10 @@ public class MainView {
     }
 
     public void newDots() {
-        ArrayList<Float> y_values = ylist.getValues();
+        float y_value = ylist.getValue();
         float x_value = xlist.getValue();
-        for(int i = 0; i < y_values.size(); i++) {
-            Mark mark = new Mark(x_value, y_values.get(i));
+        if(!Float.isNaN(y_value) && !Float.isNaN(x_value)) {
+            Mark mark = new Mark(x_value, y_value);
             points.add(mark);
         }
     }
