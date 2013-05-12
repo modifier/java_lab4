@@ -34,8 +34,6 @@ public class Graphic extends JPanel implements ICollectionListener {
 
     private double point_opacity = 1;
 
-    public INotifyable observer;
-
     public Graphic(MarkCollection points) {
         super();
 
@@ -141,7 +139,7 @@ public class Graphic extends JPanel implements ICollectionListener {
     }
 
     private void drawMarks() {
-        points.forEach(new MarkIterator() {
+        points.forEach(new IMarkIterator() {
             @Override
             public boolean Iterate(Mark mark, boolean isInside) {
                 drawMark(mark, isInside);

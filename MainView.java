@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,8 +29,6 @@ public class MainView {
 
     private JLabel data_label;
 
-    private Radius_Changed radius_changed;
-
     /**
      * Create the application.
      */
@@ -42,10 +42,6 @@ public class MainView {
 
     public void setPoints(MarkCollection points) {
         this.points = points;
-    }
-
-    public void setRadiusListener(Radius_Changed radius_changed) {
-        this.radius_changed = radius_changed;
     }
 
     public void setGraphic(JPanel graphic) {
@@ -89,8 +85,13 @@ public class MainView {
     }
 
     public void setRadius(float radius) {
-        FloatSlider slider = new FloatSlider(radius_changed);
-        slider.setValue((int) radius);
+        final RadiusList slider = new RadiusList(1, 20);
+        slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                points.setRadius(slider.getValue());
+            }
+        });
+        slider.setValue(radius);
         west_panel.add(slider, BorderLayout.CENTER);
     }
 

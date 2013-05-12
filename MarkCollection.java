@@ -25,20 +25,20 @@ public class MarkCollection {
         }
 
         points.add(mark);
-        checkOutgoing();
+        check();
     }
 
     public void setRadius(float radius) {
         this.radius = radius;
-        checkOutgoing();
+        check();
     }
 
     public float getRadius() {
         return radius;
     }
 
-    public void checkOutgoing() {
-        forEach(new MarkIterator() {
+    public void check() {
+        forEach(new IMarkIterator() {
             @Override
             public boolean Iterate(Mark mark, boolean isInside) {
                 if(!isInside) {
@@ -50,7 +50,7 @@ public class MarkCollection {
         });
     }
 
-    public void forEach(MarkIterator foo) {
+    public void forEach(IMarkIterator foo) {
         for(int i = 0; i < points.size(); i++) {
             if(!foo.Iterate(points.get(i), points.get(i).isInside(radius))) {
                 break;

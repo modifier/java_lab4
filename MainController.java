@@ -9,7 +9,7 @@ import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MainController implements INotifyable {
+public class MainController {
     public float[] y_values = new float[]{-4, 2, 4};
     public float[] x_values = new float[]{-3, -2, 1, 2, 5};
 
@@ -44,14 +44,12 @@ public class MainController implements INotifyable {
         window.setVisible();
 
         window.setPoints(points);
-        window.setRadiusListener(new Radius_Changed(this));
 
         window.setXValues(x_values);
         window.setYValues(y_values);
         window.setRadius(points.getRadius());
 
         graphic = new Graphic(points);
-        graphic.observer = this;
         graphic.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
