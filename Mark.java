@@ -16,12 +16,12 @@ public class Mark {
     }
 
     public boolean isInside(float R) {
-        if((top() || vmiddle()) && left()) {
-            return y < (x / 2 + R / 2);
-        } else if(bottom() && (left() || middle())) {
-            return (Math.pow(x, 2) + Math.pow(y, 2)) < Math.pow(R, 2);
-        } else if(bottom() && right()) {
-            return x < R && y > -R;
+        if(top() && right()) {
+            return x*x + y*y < R*R / 4;
+        } else if(top() && (left() || middle())) {
+            return x > -R && y < R / 2;
+        } else if((bottom() || vmiddle()) && right()) {
+            return 2 * x - R < y;
         }
         return false;
     }

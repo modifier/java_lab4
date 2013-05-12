@@ -13,16 +13,16 @@ public class Graphic extends JPanel implements ICollectionListener {
 
     private MarkCollection points;
 
-    final boolean SCALE_POINTS_INSTEAD_OF_FIGURE = true;
+    final boolean SCALE_POINTS_INSTEAD_OF_FIGURE = false;
 
-    final int WIDTH = 250;
-    final int HEIGHT = 250;
+    final int WIDTH = 300;
+    final int HEIGHT = 300;
 
-    final int MARGIN_X = 50;
-    final int MARGIN_Y = 50;
+    final int MARGIN_X = 20;
+    final int MARGIN_Y = 20;
 
-    final int VIEWPORT_X = 20;
-    final int VIEWPORT_Y = 20;
+    final int VIEWPORT_X = 30;
+    final int VIEWPORT_Y = 30;
 
     int viewport_x = VIEWPORT_X;
     int viewport_y = VIEWPORT_Y;
@@ -31,13 +31,14 @@ public class Graphic extends JPanel implements ICollectionListener {
 
     final int POINT_RADIUS = 5;
 
-    final String BG_COLOR = "#f5f5dc"; // Bezheviy
-    final String FIGURE_COLOR = "#0000ff"; // Blue
+    final String BG_COLOR = "#F9FCBA"; // Light yellow
+    final String FIGURE_COLOR = "#946B51"; // Brown
     final String AXIS_COLOR = "#000000";
     final String MARK_INSIDE_COLOR = "#00FF00";
     final String MARK_OUTSIDE_COLOR = "#FF0000";
 
     private double point_opacity = 1;
+    private int point_radius = POINT_RADIUS;
 
     public Graphic(MarkCollection points) {
         super();
@@ -139,13 +140,13 @@ public class Graphic extends JPanel implements ICollectionListener {
 
         graphic.setColor(Color.decode(FIGURE_COLOR));
 
+        graphic.fillRect(CENTER_X, CENTER_X, -RADIUS_X, -RADIUS_Y / 2);
+        graphic.fillArc(CENTER_X - RADIUS_X / 2, CENTER_Y - RADIUS_Y / 2, RADIUS_X, RADIUS_Y, 0, 90);
         Polygon polygon = new Polygon();
         polygon.addPoint(CENTER_X, CENTER_Y);
-        polygon.addPoint(CENTER_X, CENTER_Y - RADIUS_Y / 2);
-        polygon.addPoint(CENTER_X - RADIUS_X, CENTER_Y);
+        polygon.addPoint(CENTER_X + RADIUS_X / 2, CENTER_Y);
+        polygon.addPoint(CENTER_X, CENTER_Y + RADIUS_Y);
         graphic.fillPolygon(polygon);
-        graphic.fillArc(CENTER_X - RADIUS_X, CENTER_Y - RADIUS_Y, RADIUS_X * 2, RADIUS_Y * 2, 180, 90);
-        graphic.fillRect(CENTER_X, CENTER_Y, RADIUS_X, RADIUS_Y);
     }
 
     private void drawMarks() {
@@ -164,7 +165,7 @@ public class Graphic extends JPanel implements ICollectionListener {
 
         Color innercolor = Color.decode(point_inside ? MARK_INSIDE_COLOR : MARK_OUTSIDE_COLOR);
         graphic.setColor(new Color(innercolor.getRed(), innercolor.getGreen(), innercolor.getBlue(), (int)(point_opacity * 255)));
-        graphic.fillOval(X_POS - POINT_RADIUS / 2, Y_POS - POINT_RADIUS / 2, POINT_RADIUS, POINT_RADIUS);
+        graphic.fillOval(X_POS - point_radius / 2, Y_POS - point_radius / 2, point_radius, point_radius);
     }
 
     public void setPointFromCoords(int x, int y) {
@@ -182,18 +183,24 @@ public class Graphic extends JPanel implements ICollectionListener {
         animator = new Thread(new Runnable() {
             @Override
             public void run() {
-                final int duration = 1000;
-                final int delay = 8000;
+                float start_size = points.getRadius() / 14 * WIDTH / viewport_x;
+                float end_size = points.getRadius() / 24 * WIDTH / viewport_y;
+                final int duration = 500;
                 final int step = 5;
-                final double finalOpacity = 0;
-                double startOpacity = point_opacity;
+                boolean grow = false;
                 int counter = 0;
 
                 try {
-                    animator.sleep(delay);
-
-                    while(counter < duration) {
-                        point_opacity = finalOpacity + (startOpacity - finalOpacity) * (duration - counter) / duration;
+                    while(true) {
+                        if(counter > duration) {
+                            counter = 0;
+                            grow = !grow;
+                        }
+                        if(grow) {
+                            point_radius = (int)(start_size + (end_size - start_size) * counter / duration);
+                        } else {
+                            point_radius = (int)(start_size + (end_size - start_size) * (duration - counter) / duration);
+                        }
 
                         counter += step;
                         animator.sleep(step);
@@ -201,7 +208,7 @@ public class Graphic extends JPanel implements ICollectionListener {
                 }
                 catch (Exception e) {
                     animator = null;
-                    point_opacity = 1;
+                    point_radius = POINT_RADIUS;
                 }
             }
         });

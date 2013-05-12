@@ -85,7 +85,7 @@ public class MainView {
     }
 
     public void setRadius(float radius) {
-        final RadiusList slider = new RadiusList(1, 20);
+        final RadiusList slider = new RadiusList(1, 30);
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 points.setRadius(slider.getValue());

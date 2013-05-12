@@ -34,7 +34,7 @@ public class MainController {
 
     public MainController() {
         points = new MarkCollection();
-        points.setRadius(20);
+        points.setRadius(15);
 
         initializeWindow();
     }
