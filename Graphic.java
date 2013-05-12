@@ -13,14 +13,19 @@ public class Graphic extends JPanel implements ICollectionListener {
 
     private MarkCollection points;
 
-    final int WIDTH = 300;
-    final int HEIGHT = 300;
+    final boolean SCALE_POINTS_INSTEAD_OF_FIGURE = true;
 
-    final int MARGIN_X = 20;
-    final int MARGIN_Y = 20;
+    final int WIDTH = 250;
+    final int HEIGHT = 250;
+
+    final int MARGIN_X = 50;
+    final int MARGIN_Y = 50;
 
     final int VIEWPORT_X = 20;
     final int VIEWPORT_Y = 20;
+
+    int viewport_x = VIEWPORT_X;
+    int viewport_y = VIEWPORT_Y;
 
     final int MARK_SIZE = 10;
 
@@ -55,6 +60,11 @@ public class Graphic extends JPanel implements ICollectionListener {
             return;
         }
 
+        if(SCALE_POINTS_INSTEAD_OF_FIGURE) {
+            viewport_x = (int)points.getRadius();
+            viewport_y = (int)points.getRadius();
+        }
+
         graphic.setColor(Color.decode(BG_COLOR));
         graphic.fillRect(0, 0, WIDTH + 2 * MARGIN_X, HEIGHT + 2 * MARGIN_Y);
 
@@ -68,8 +78,8 @@ public class Graphic extends JPanel implements ICollectionListener {
         final int CENTER_X = MARGIN_X + WIDTH / 2;
         final int CENTER_Y = MARGIN_Y + HEIGHT / 2;
 
-        int RADIUS_X = WIDTH / 2 * (int)points.getRadius() / VIEWPORT_X;
-        int RADIUS_Y = HEIGHT / 2 * (int)points.getRadius() / VIEWPORT_Y;
+        int RADIUS_X = WIDTH / 2 * (int)points.getRadius() / viewport_x;
+        int RADIUS_Y = HEIGHT / 2 * (int)points.getRadius() / viewport_y;
 
         final int FULL_VIEWPORT_X = WIDTH + MARGIN_X * 2;
         final int FULL_VIEWPORT_Y = HEIGHT + MARGIN_Y * 2;
@@ -124,8 +134,8 @@ public class Graphic extends JPanel implements ICollectionListener {
         final int CENTER_X = MARGIN_X + WIDTH / 2;
         final int CENTER_Y = MARGIN_Y + HEIGHT / 2;
 
-        int RADIUS_X = WIDTH / 2 * (int)points.getRadius() / VIEWPORT_X;
-        int RADIUS_Y = HEIGHT / 2 * (int)points.getRadius() / VIEWPORT_Y;
+        int RADIUS_X = WIDTH / 2 * (int)points.getRadius() / viewport_x;
+        int RADIUS_Y = HEIGHT / 2 * (int)points.getRadius() / viewport_y;
 
         graphic.setColor(Color.decode(FIGURE_COLOR));
 
@@ -149,8 +159,8 @@ public class Graphic extends JPanel implements ICollectionListener {
     }
 
     private void drawMark(Mark m, boolean point_inside) {
-        int X_POS = MARGIN_X + WIDTH / 2 + Math.round(WIDTH / VIEWPORT_X *  m.x / 2);
-        int Y_POS = MARGIN_Y + HEIGHT / 2 - Math.round(HEIGHT / VIEWPORT_Y * m.y / 2);
+        int X_POS = MARGIN_X + WIDTH / 2 + Math.round(WIDTH / viewport_x *  m.x / 2);
+        int Y_POS = MARGIN_Y + HEIGHT / 2 - Math.round(HEIGHT / viewport_y * m.y / 2);
 
         Color innercolor = Color.decode(point_inside ? MARK_INSIDE_COLOR : MARK_OUTSIDE_COLOR);
         graphic.setColor(new Color(innercolor.getRed(), innercolor.getGreen(), innercolor.getBlue(), (int)(point_opacity * 255)));
@@ -158,8 +168,8 @@ public class Graphic extends JPanel implements ICollectionListener {
     }
 
     public void setPointFromCoords(int x, int y) {
-        float new_x = (float)(x - MARGIN_X - WIDTH / 2) * VIEWPORT_X / WIDTH * 2;
-        float new_y = (float)(MARGIN_Y + HEIGHT / 2 - y) * VIEWPORT_Y / HEIGHT * 2;
+        float new_x = (float)(x - MARGIN_X - WIDTH / 2) * viewport_x / WIDTH * 2;
+        float new_y = (float)(MARGIN_Y + HEIGHT / 2 - y) * viewport_y / HEIGHT * 2;
         points.add(new Mark(new_x, new_y));
         draw();
     }
