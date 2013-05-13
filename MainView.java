@@ -11,11 +11,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 
 
 public class MainView {
@@ -26,8 +23,8 @@ public class MainView {
     private JPanel west_panel;
     private JPanel east_panel;
 
-    private XList xlist;
-    private YList ylist;
+    private XPanel xlist;
+    private YPanel ylist;
 
     private JLabel data_label;
 
@@ -65,7 +62,7 @@ public class MainView {
     }
 
     public void setYValues(float[] values) {
-        ylist = new YList(values, new ItemListener() {
+        ylist = new YPanel(values, new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 newDots();
@@ -76,7 +73,7 @@ public class MainView {
     }
 
     public void setXValues(float[] values) {
-        xlist = new XList(values, new ListSelectionListener() {
+        xlist = new XPanel(values, new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 newDots();
             }
@@ -86,7 +83,7 @@ public class MainView {
     }
 
     public void setRadius(float radius) {
-        final RadiusList slider = new RadiusList(1, 30);
+        final RadiusPanel slider = new RadiusPanel(1, 30);
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 points.setRadius(slider.getValue());
