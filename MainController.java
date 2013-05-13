@@ -8,7 +8,6 @@
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class MainController {
     public float[] y_values = new float[]{-4, 2, 4};
@@ -57,23 +56,6 @@ public class MainController {
             }
         });
         window.setGraphic(graphic);
-    }
-
-    public void refresh() {
-        if(graphic == null) {
-            return;
-        }
-        graphic.draw();
-    }
-
-    public void setRadius(float radius) {
-        this.points.setRadius(radius);
-        refresh();
-    }
-
-    public void Notify(Mark mark) {
-        points.add(mark);
-        refresh();
     }
 }
 
