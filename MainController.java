@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -50,30 +51,9 @@ public class MainController {
         window.setRadius(points.getRadius());
 
         graphic = new Graphic(points);
-        graphic.addMouseListener(new MouseListener() {
-            @Override
+        graphic.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 graphic.setPointFromCoords(e.getX(), e.getY());
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
         });
         window.setGraphic(graphic);
