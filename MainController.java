@@ -63,7 +63,7 @@ public class MainController {
         if(graphic == null) {
             return;
         }
-        graphic.draw();
+        graphic.repaint();
     }
 
     public void setRadius(float radius) {
