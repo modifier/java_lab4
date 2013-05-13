@@ -7,7 +7,10 @@
  */
 import javax.swing.*;
 import java.awt.*;
-public class Graphic extends JPanel implements ICollectionListener {
+import java.util.Observable;
+import java.util.Observer;
+
+public class Graphic extends JPanel implements Observer {
     private Graphics graphic;
     private Thread animator;
 
@@ -44,7 +47,7 @@ public class Graphic extends JPanel implements ICollectionListener {
         super();
 
         this.points = points;
-        points.observer = this;
+        points.addObserver(this);
     }
 
     @Override
@@ -72,7 +75,6 @@ public class Graphic extends JPanel implements ICollectionListener {
         drawGraphic();
         drawAxis();
         drawMarks();
-        this.repaint();
     }
 
     private void drawAxis() {
@@ -175,7 +177,7 @@ public class Graphic extends JPanel implements ICollectionListener {
         draw();
     }
 
-    public void Notify() {
+    public void animate() {
         if(animator != null) {
             return;
         }
@@ -213,5 +215,15 @@ public class Graphic extends JPanel implements ICollectionListener {
             }
         });
         animator.start();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        String action = (String)arg;
+        if(action.equals("animate")) {
+            animate();
+        } else if(action.equals("change")) {
+            repaint();
+        }
     }
 }

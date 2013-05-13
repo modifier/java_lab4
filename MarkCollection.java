@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -7,11 +8,9 @@ import java.util.ArrayList;
  * Time: 2:11
  * To change this template use File | Settings | File Templates.
  */
-public class MarkCollection {
+public class MarkCollection extends Observable {
     private ArrayList<Mark> points;
     private float radius;
-
-    ICollectionListener observer;
 
     public MarkCollection() {
         this.points = new ArrayList<Mark>();
@@ -25,11 +24,17 @@ public class MarkCollection {
         }
 
         points.add(mark);
+
+        setChanged();
+        notifyObservers("change");
     }
 
     public void setRadius(float radius) {
         check(radius);
         this.radius = radius;
+
+        setChanged();
+        notifyObservers("change");
     }
 
     public float getRadius() {
@@ -41,7 +46,8 @@ public class MarkCollection {
             @Override
             public boolean Iterate(Mark mark, boolean isInside) {
                 if(!mark.isInside(radius) && isInside) {
-                    observer.Notify();
+                    setChanged();
+                    notifyObservers("animate");
                     return false;
                 }
                 return true;
