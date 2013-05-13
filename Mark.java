@@ -15,17 +15,6 @@ public class Mark {
         this.y = y;
     }
 
-    public boolean isInside(float R) {
-        if(top() && right()) {
-            return x*x + y*y < R*R / 4;
-        } else if(top() && (left() || middle())) {
-            return x > -R && y < R / 2;
-        } else if((bottom() || vmiddle()) && right()) {
-            return 2 * x - R < y;
-        }
-        return false;
-    }
-
     public boolean equals(Mark mark) {
         return mark.x == x && mark.y == y;
     }
