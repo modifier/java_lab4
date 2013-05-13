@@ -205,6 +205,7 @@ public class Graphic extends JPanel implements Observer {
 
                         counter += step;
                         animator.sleep(step);
+                        repaint();
                     }
                 }
                 catch (Exception e) {
