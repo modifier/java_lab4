@@ -24,8 +24,8 @@ public class MainView {
     private JPanel west_panel;
     private JPanel east_panel;
 
-    private XList xlist;
-    private YList ylist;
+    private XPanel xlist;
+    private YPanel ylist;
 
     private JLabel data_label;
 
@@ -63,7 +63,7 @@ public class MainView {
     }
 
     public void setYValues(float[] values) {
-        ylist = new YList(values, new ItemListener() {
+        ylist = new YPanel(values, new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 newDots();
@@ -74,7 +74,7 @@ public class MainView {
     }
 
     public void setXValues(float[] values) {
-        xlist = new XList(values, new ActionListener() {
+        xlist = new XPanel(values, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 newDots();
@@ -85,7 +85,7 @@ public class MainView {
     }
 
     public void setRadius(float radius) {
-        final RadiusList slider = new RadiusList(1, 20);
+        final RadiusPanel slider = new RadiusPanel(1, 20);
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 points.setRadius(slider.getValue());
