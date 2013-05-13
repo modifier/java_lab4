@@ -45,13 +45,14 @@ public class Graphic extends JPanel implements Observer {
     public Graphic(MarkCollection points) {
         super();
 
+        setPreferredSize(new Dimension(WIDTH + 2 * MARGIN_X, HEIGHT + 2 * MARGIN_Y));
+
         this.points = points;
         points.addObserver(this);
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        this.setPreferredSize(new Dimension(WIDTH + 2 * MARGIN_X, HEIGHT + 2 * MARGIN_Y));
         graphic = g;
         super.paintComponent(g);
 
