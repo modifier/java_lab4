@@ -166,7 +166,7 @@ public class Graphic extends JPanel implements Observer {
 
         Color innercolor = Color.decode(point_inside ? MARK_INSIDE_COLOR : MARK_OUTSIDE_COLOR);
         g.setColor(new Color(innercolor.getRed(), innercolor.getGreen(), innercolor.getBlue(), (int)(point_opacity * 255)));
-        g.fillOval(X_POS - POINT_RADIUS / 2, Y_POS - POINT_RADIUS / 2, POINT_RADIUS, POINT_RADIUS);
+        g.fillOval(X_POS - point_radius / 2, Y_POS - point_radius / 2, point_radius, point_radius);
     }
 
     public void setPointFromCoords(int x, int y) {
