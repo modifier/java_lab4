@@ -11,6 +11,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -73,8 +75,8 @@ public class MainView {
     }
 
     public void setXValues(float[] values) {
-        xlist = new XPanel(values, new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
+        xlist = new XPanel(values, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 newDots();
             }
         });
