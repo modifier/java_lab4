@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 
 public class MainView {
@@ -94,11 +95,13 @@ public class MainView {
     }
 
     public void newDots() {
-        float y_value = ylist.getValue();
+        ArrayList<Float> y_values = ylist.getValues();
         float x_value = xlist.getValue();
-        if(!Float.isNaN(y_value) && !Float.isNaN(x_value)) {
-            Mark mark = new Mark(x_value, y_value);
-            points.add(mark);
+        for(int i = 0; i < y_values.size(); i++) {
+            if(!Float.isNaN(y_values.get(i)) && !Float.isNaN(x_value)) {
+                Mark mark = new Mark(x_value, y_values.get(i));
+                points.add(mark);
+            }
         }
     }
 }

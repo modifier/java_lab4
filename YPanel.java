@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class YPanel extends JPanel {
     private JLabel label;
-    private ArrayList<JRadioButton> checkBoxes;
+    private ArrayList<JCheckBox> checkBoxes;
     private float[] values;
 
     public YPanel(float[] values, ItemListener changed) {
@@ -22,14 +22,12 @@ public class YPanel extends JPanel {
         label = new JLabel();
         this.add(label);
 
-        ButtonGroup group = new ButtonGroup();
-        checkBoxes = new ArrayList<JRadioButton>();
+        checkBoxes = new ArrayList<JCheckBox>();
 
         for(int i = 0; i < values.length; i++) {
-            JRadioButton btn = new JRadioButton(Float.toString(values[i]));
+            JCheckBox btn = new JCheckBox(Float.toString(values[i]));
             btn.addItemListener(changed);
             checkBoxes.add(btn);
-            group.add(btn);
 
             this.add(btn);
         }
@@ -39,12 +37,13 @@ public class YPanel extends JPanel {
         this.label.setText(label);
     }
 
-    public float getValue() {
+    public ArrayList<Float> getValues() {
+        ArrayList<Float> result = new ArrayList<Float>();
         for(int i = 0; i < checkBoxes.size(); i++) {
             if(checkBoxes.get(i).isSelected()) {
-                return values[i];
+                result.add(values[i]);
             }
         }
-        return Float.NaN;
+        return result;
     }
 }
