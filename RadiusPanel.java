@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,26 +9,24 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class RadiusPanel extends JPanel {
-    private JSlider slider;
+    private JSpinner spinner;
 
-    public RadiusPanel(float min, float max) {
+    public RadiusPanel() {
         super();
-        slider = new JSlider();
-        slider.setMinimum((int)min);
-        slider.setMaximum((int)max);
+        spinner = new JSpinner();
 
-        add(slider);
+        add(spinner);
     }
 
     public float getValue() {
-        return slider.getValue();
+        return (Integer)spinner.getValue();
     }
 
     public void setValue(float value) {
-        slider.setValue((int)value);
+        spinner.setValue((int) value);
     }
 
     public synchronized void addChangeListener(ChangeListener changed) {
-        slider.addChangeListener(changed);
+        spinner.addChangeListener(changed);
     }
 }
