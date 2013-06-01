@@ -13,11 +13,11 @@ public class Area {
 
     public boolean contains(Mark m) {
         if(m.top() && m.right()) {
-            return m.x*m.x + m.y*m.y < radius*radius / 4;
-        } else if(m.top() && (m.left() || m.middle())) {
-            return m.x > -radius && m.y < radius / 2;
-        } else if((m.bottom() || m.vmiddle()) && m.right()) {
-            return 2 * m.x - radius < m.y;
+            return m.x < radius && m.y < radius;
+        } else if(m.bottom() && (m.right() || m.vmiddle())) {
+            return m.x*m.x + m.y*m.y < radius*radius;
+        } else if((m.bottom() || m.middle()) && m.left()) {
+            return -2 * m.x - radius < m.y;
         }
         return false;
     }
