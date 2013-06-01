@@ -143,12 +143,12 @@ public class Graphic extends JPanel implements Observer {
 
         g.setColor(figure_color_actual);
 
-        g.fillRect(CENTER_X, CENTER_X, -RADIUS_X, -RADIUS_Y / 2);
-        g.fillArc(CENTER_X - RADIUS_X / 2, CENTER_Y - RADIUS_Y / 2, RADIUS_X, RADIUS_Y, 0, 90);
+        g.fillRect(CENTER_X, CENTER_X, -RADIUS_X, RADIUS_Y / 2);
+        g.fillArc(CENTER_X - RADIUS_X / 2, CENTER_Y - RADIUS_Y / 2, RADIUS_X, RADIUS_Y, 90, 90);
         Polygon polygon = new Polygon();
         polygon.addPoint(CENTER_X, CENTER_Y);
         polygon.addPoint(CENTER_X + RADIUS_X / 2, CENTER_Y);
-        polygon.addPoint(CENTER_X, CENTER_Y + RADIUS_Y);
+        polygon.addPoint(CENTER_X, CENTER_Y - RADIUS_Y);
         g.fillPolygon(polygon);
     }
 
