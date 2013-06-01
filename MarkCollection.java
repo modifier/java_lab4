@@ -31,6 +31,9 @@ public class MarkCollection extends Observable {
     public void setRadius(float radius) {
         this.radius = radius;
         area = new Area(radius);
+
+        setChanged();
+        notifyObservers("change");
     }
 
     public float getRadius() {
