@@ -7,6 +7,7 @@
  */
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -173,7 +174,7 @@ public class Graphic extends JPanel implements Observer {
 
         Color innercolor = Color.decode(point_inside ? MARK_INSIDE_COLOR : MARK_OUTSIDE_COLOR);
         g.setColor(new Color(innercolor.getRed(), innercolor.getGreen(), innercolor.getBlue(), (int)(point_opacity * 255)));
-        g.fillOval(X_POS - point_radius / 2, Y_POS - point_radius / 2, point_radius, point_radius);
+        g.fillOval((int)(X_POS - m.radius / 2), (int)(Y_POS - m.radius / 2), (int)Math.ceil(m.radius), (int)Math.ceil(m.radius));
     }
 
     public void setPointFromCoords(int x, int y) {
@@ -184,31 +185,21 @@ public class Graphic extends JPanel implements Observer {
     }
 
     public void animate() {
-        if(animator != null) {
-            return;
-        }
+         final Mark last = points.last();
 
         animator = new Thread(new Runnable() {
             @Override
             public void run() {
-                float start_size = points.getRadius() / 14 * WIDTH / viewport_x;
-                float end_size = points.getRadius() / 24 * WIDTH / viewport_y;
+                float start_size = last.radius;
+                float end_size = point_radius;
                 final int duration = 500;
                 final int step = 5;
-                boolean grow = false;
+
                 int counter = 0;
 
                 try {
-                    while(true) {
-                        if(counter > duration) {
-                            counter = 0;
-                            grow = !grow;
-                        }
-                        if(grow) {
-                            point_radius = (int)(start_size + (end_size - start_size) * counter / duration);
-                        } else {
-                            point_radius = (int)(start_size + (end_size - start_size) * (duration - counter) / duration);
-                        }
+                    while(counter < duration) {
+                        last.radius = (float)Math.ceil(start_size + (end_size - start_size) * counter / duration);
 
                         counter += step;
                         animator.sleep(step);
