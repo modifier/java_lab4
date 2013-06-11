@@ -22,8 +22,10 @@ public class MainView {
 
     private MarkCollection points;
 
+    private JPanel master;
+
     private JPanel west_panel;
-    private JPanel east_panel;
+    private Graphic east_panel;
 
     private XPanel xlist;
     private YPanel ylist;
@@ -45,9 +47,10 @@ public class MainView {
         this.points = points;
     }
 
-    public void setGraphic(JPanel graphic) {
+    public void setGraphic(Graphic graphic) {
         east_panel = graphic;
-        frame.getContentPane().add(east_panel, BorderLayout.CENTER);
+
+        master.add(east_panel);
     }
 
     /**
@@ -59,8 +62,11 @@ public class MainView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
+        master = new JPanel(new GridLayout(1, 2));
+        frame.getContentPane().add(master);
+
         west_panel = new JPanel(new FlowLayout());
-        frame.getContentPane().add(west_panel, BorderLayout.EAST);
+        master.add(west_panel);
     }
 
     public void setYValues(float[] values) {
@@ -71,7 +77,7 @@ public class MainView {
             }
         });
         ylist.setLabel("Y value:");
-        west_panel.add(ylist, BorderLayout.NORTH);
+        west_panel.add(ylist);
     }
 
     public void setXValues(float[] values) {
@@ -81,7 +87,7 @@ public class MainView {
             }
         });
         xlist.setLabel("X value:");
-        west_panel.add(xlist, BorderLayout.NORTH);
+        west_panel.add(xlist);
     }
 
     public void setRadius(float radius) {
@@ -92,7 +98,7 @@ public class MainView {
             }
         });
         slider.setValue(radius);
-        west_panel.add(slider, BorderLayout.CENTER);
+        west_panel.add(slider);
     }
 
     public void newDots() {
@@ -102,5 +108,25 @@ public class MainView {
             Mark mark = new Mark(x_value, y_value);
             points.add(mark);
         }
+    }
+
+    public void initPointRadius() {
+        int size = east_panel.point_radius;
+
+        JPanel panel = new JPanel(new GridLayout(2, 1));
+        JLabel label = new JLabel("Point size: ");
+
+        final JSpinner size_control = new JSpinner();
+        size_control.setValue(size);
+        size_control.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                east_panel.point_radius = (Integer)size_control.getValue();
+            }
+        });
+
+        panel.add(label);
+        panel.add(size_control);
+
+        west_panel.add(panel, BorderLayout.CENTER);
     }
 }

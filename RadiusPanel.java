@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,9 +13,12 @@ public class RadiusPanel extends JPanel {
     private JSpinner spinner;
 
     public RadiusPanel() {
-        super();
-        spinner = new JSpinner();
+        super(new GridLayout(2, 1));
 
+        JLabel label = new JLabel("Radius:");
+        add(label);
+
+        spinner = new JSpinner();
         add(spinner);
     }
 

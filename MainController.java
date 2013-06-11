@@ -56,6 +56,8 @@ public class MainController {
             }
         });
         window.setGraphic(graphic);
+
+        window.initPointRadius();
     }
 }
 

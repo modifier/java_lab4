@@ -41,10 +41,10 @@ public class Graphic extends JPanel implements Observer {
     final String MARK_OUTSIDE_COLOR = "#FF0000";
 
     private double point_opacity = 1;
-    private int point_radius = POINT_RADIUS;
+    public int point_radius = POINT_RADIUS;
 
     public Graphic(MarkCollection points) {
-        super();
+        super(new GridLayout(1, 1));
 
         setPreferredSize(new Dimension(WIDTH + 2 * MARGIN_X, HEIGHT + 2 * MARGIN_Y));
 
