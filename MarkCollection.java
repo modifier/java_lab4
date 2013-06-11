@@ -30,7 +30,7 @@ public class MarkCollection extends Observable {
         mark.radius = radius / 8;
 
         setChanged();
-        notifyObservers(animate_on_adding ? "animate" : "change");
+        notifyObservers(animate_on_adding ? "animate" : "add");
     }
 
     public Mark last() {
