@@ -12,10 +12,10 @@ import java.awt.event.ActionListener;
  */
 public class XPanel extends JPanel {
     private JLabel label;
-    private JComboBox x_group;
+    private JList x_group;
     private float[] values;
 
-    public XPanel(float[] values, ActionListener changed) {
+    public XPanel(float[] values, ListSelectionListener changed) {
         super(new GridLayout(0, 1));
 
         this.values = values;
@@ -23,15 +23,15 @@ public class XPanel extends JPanel {
         label = new JLabel();
         this.add(label);
 
-        DefaultComboBoxModel model = new DefaultComboBoxModel ();
+        DefaultListModel model = new DefaultListModel();
         for(int i = 0; i < values.length; i++) {
             model.addElement(Float.toString(values[i]));
         }
 
-        x_group = new JComboBox();
+        x_group = new JList();
         x_group.setModel(model);
 
-        x_group.addActionListener(changed);
+        x_group.addListSelectionListener(changed);
 
         this.add(x_group);
     }
