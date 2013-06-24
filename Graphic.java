@@ -16,7 +16,7 @@ public class Graphic extends JPanel implements Observer {
 
     private MarkCollection points;
 
-    final boolean SCALE_POINTS_INSTEAD_OF_FIGURE = true;
+    final boolean SCALE_POINTS_INSTEAD_OF_FIGURE = false;
 
     final int WIDTH = 250;
     final int HEIGHT = 250;
