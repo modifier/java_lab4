@@ -50,7 +50,7 @@ public class MainView {
     public void setGraphic(Graphic graphic) {
         east_panel = graphic;
 
-        master.add(east_panel);
+        master.add(east_panel, BorderLayout.EAST);
     }
 
     /**
@@ -62,14 +62,14 @@ public class MainView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        master = new JPanel(new GridLayout(1, 2));
+        master = new JPanel(new BorderLayout());
         frame.getContentPane().add(master);
 
         west_panel = new JPanel(new FlowLayout());
-        master.add(west_panel);
+        master.add(west_panel, BorderLayout.WEST);
 
         data_label = new JLabel();
-        west_panel.add(data_label);
+        master.add(data_label, BorderLayout.NORTH);
     }
 
     public void setLabel(String label) {
