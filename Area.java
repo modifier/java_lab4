@@ -16,8 +16,8 @@ public class Area {
             return m.x < radius && m.y < radius;
         } else if(m.bottom() && (m.right() || m.vmiddle())) {
             return m.x*m.x + m.y*m.y < radius*radius;
-        } else if((m.bottom() || m.middle()) && m.left()) {
-            return -2 * m.x - radius < m.y;
+        } else if((m.top() || m.middle()) && m.left()) {
+            return m.x + radius / 2 > m.y;
         }
         return false;
     }

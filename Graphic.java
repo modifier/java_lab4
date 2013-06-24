@@ -154,7 +154,7 @@ public class Graphic extends JPanel implements Observer {
         Polygon polygon = new Polygon();
         polygon.addPoint(CENTER_X, CENTER_Y);
         polygon.addPoint(CENTER_X - RADIUS_X / 2, CENTER_Y);
-        polygon.addPoint(CENTER_X, CENTER_Y + RADIUS_Y);
+        polygon.addPoint(CENTER_X, CENTER_Y - RADIUS_Y / 2);
         g.fillPolygon(polygon);
     }
 
