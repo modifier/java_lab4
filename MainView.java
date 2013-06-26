@@ -23,6 +23,8 @@ public class MainView {
 
     private MarkCollection points;
 
+    private JPanel master;
+
     private JPanel west_panel;
     private JPanel east_panel;
 
@@ -48,7 +50,7 @@ public class MainView {
 
     public void setGraphic(JPanel graphic) {
         east_panel = graphic;
-        frame.getContentPane().add(east_panel, BorderLayout.CENTER);
+        master.add(east_panel, BorderLayout.WEST);
     }
 
     /**
@@ -60,11 +62,14 @@ public class MainView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
+        master = new JPanel(new BorderLayout());
+        frame.getContentPane().add(master);
+
         west_panel = new JPanel(new FlowLayout());
-        frame.getContentPane().add(west_panel, BorderLayout.EAST);
+        master.add(west_panel, BorderLayout.EAST);
 
         data_label = new JLabel();
-        west_panel.add(data_label, BorderLayout.NORTH);
+        master.add(data_label, BorderLayout.NORTH);
     }
 
     public void setLabel(String label) {
