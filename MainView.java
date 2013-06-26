@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 public class MainView {
@@ -63,10 +65,11 @@ public class MainView {
     }
 
     public void setYValues(float[] values) {
-        ylist = new YPanel(values, new ItemListener() {
+        ylist = new YPanel(values, new ActionListener() {
+                       
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                newDots();
+            public void actionPerformed(ActionEvent e) {
+                  newDots();
             }
         });
         ylist.setLabel("Y value:");
@@ -74,10 +77,11 @@ public class MainView {
     }
 
     public void setXValues(float[] values) {
-        xlist = new XPanel(values, new ActionListener() {
+        xlist = new XPanel(values, new ListSelectionListener() {
+                        
             @Override
-            public void actionPerformed(ActionEvent e) {
-                newDots();
+            public void valueChanged(ListSelectionEvent e) {
+               newDots(); 
             }
         });
         xlist.setLabel("X value:");

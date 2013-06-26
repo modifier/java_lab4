@@ -33,8 +33,8 @@ public class Graphic extends JPanel implements Observer {
 
     final int POINT_RADIUS = 5;
 
-    final String BG_COLOR = "#f5f5dc"; // Bezheviy
-    final String FIGURE_COLOR = "#0000ff"; // Blue
+    final String BG_COLOR = "#FFFFFF"; // white
+    final String FIGURE_COLOR = "#A52A2A"; // brown
     final String AXIS_COLOR = "#000000";
     final String MARK_INSIDE_COLOR = "#00FF00";
     final String MARK_OUTSIDE_COLOR = "#FF0000";
