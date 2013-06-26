@@ -8,14 +8,18 @@
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MainController {
+public class MainController implements Observer {
     public float[] y_values = new float[]{-4, 2, 4};
     public float[] x_values = new float[]{-3, -2, 1, 2, 5};
 
     private MarkCollection points;
 
     private Graphic graphic;
+
+    private MainView window;
 
     /**
      * Launch the application.
@@ -40,7 +44,7 @@ public class MainController {
     }
 
     private void initializeWindow() {
-        MainView window = new MainView();
+        window = new MainView();
         window.setVisible();
 
         window.setPoints(points);
@@ -56,6 +60,16 @@ public class MainController {
             }
         });
         window.setGraphic(graphic);
+
+        points.addObserver(this);
+    }
+
+    public void update(Observable o, Object arg) {
+        String action = (String)arg;
+        if(action.equals("add")) {
+            Mark last = points.last();
+            window.setLabel("Recent added point has coordinates: (" + last.x + ", " + last.y + ")");
+        }
     }
 }
 

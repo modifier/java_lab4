@@ -28,7 +28,11 @@ public class MarkCollection extends Observable {
         check();
 
         setChanged();
-        notifyObservers("change");
+        notifyObservers("add");
+    }
+
+    public Mark last() {
+        return points.get(points.size() - 1);
     }
 
     public void setRadius(float radius) {

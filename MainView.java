@@ -62,6 +62,13 @@ public class MainView {
 
         west_panel = new JPanel(new FlowLayout());
         frame.getContentPane().add(west_panel, BorderLayout.EAST);
+
+        data_label = new JLabel();
+        west_panel.add(data_label, BorderLayout.NORTH);
+    }
+
+    public void setLabel(String label) {
+        data_label.setText(label);
     }
 
     public void setYValues(float[] values) {

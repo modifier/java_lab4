@@ -215,7 +215,7 @@ public class Graphic extends JPanel implements Observer {
         String action = (String)arg;
         if(action.equals("animate")) {
             animate();
-        } else if(action.equals("change")) {
+        } else if(action.equals("change") || action.equals("add")) {
             repaint();
         }
     }
