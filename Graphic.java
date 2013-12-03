@@ -142,11 +142,13 @@ public class Graphic extends JPanel implements Observer {
 
         Polygon polygon = new Polygon();
         polygon.addPoint(CENTER_X, CENTER_Y);
-        polygon.addPoint(CENTER_X, CENTER_Y - RADIUS_Y / 2);
-        polygon.addPoint(CENTER_X - RADIUS_X, CENTER_Y);
+        polygon.addPoint(CENTER_X + RADIUS_X, CENTER_Y);
+        polygon.addPoint(CENTER_X, CENTER_Y + RADIUS_Y);
         g.fillPolygon(polygon);
-        g.fillArc(CENTER_X - RADIUS_X, CENTER_Y - RADIUS_Y, RADIUS_X * 2, RADIUS_Y * 2, 180, 90);
-        g.fillRect(CENTER_X, CENTER_Y, RADIUS_X, RADIUS_Y);
+
+        g.fillArc(CENTER_X - RADIUS_X / 2, CENTER_Y - RADIUS_Y / 2, RADIUS_X, RADIUS_Y, 0, 90);
+
+        g.fillRect(CENTER_X, CENTER_Y, -RADIUS_X / 2, RADIUS_Y);
     }
 
     private void drawMarks(final Graphics g) {
