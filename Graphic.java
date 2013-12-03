@@ -34,10 +34,12 @@ public class Graphic extends JPanel implements Observer {
     final int POINT_RADIUS = 5;
 
     final String BG_COLOR = "#ffe3a1"; // Bledno-pesochnyi
-    final String FIGURE_COLOR = "#000"; // Black
+    final String FIGURE_COLOR = "#000000"; // Black
     final String AXIS_COLOR = "#000000";
     final String MARK_INSIDE_COLOR = "#00FF00";
     final String MARK_OUTSIDE_COLOR = "#FF0000";
+
+    Color figure_color_actual = Color.decode(FIGURE_COLOR);
 
     private double point_opacity = 1;
 
@@ -138,7 +140,7 @@ public class Graphic extends JPanel implements Observer {
         int RADIUS_X = WIDTH / 2 * (int)points.getRadius() / viewport_x;
         int RADIUS_Y = HEIGHT / 2 * (int)points.getRadius() / viewport_y;
 
-        g.setColor(Color.decode(FIGURE_COLOR));
+        g.setColor(figure_color_actual);
 
         Polygon polygon = new Polygon();
         polygon.addPoint(CENTER_X, CENTER_Y);
@@ -185,27 +187,45 @@ public class Graphic extends JPanel implements Observer {
         animator = new Thread(new Runnable() {
             @Override
             public void run() {
+                int r = figure_color_actual.getRed();
+                int g = figure_color_actual.getGreen();
+                int b = figure_color_actual.getBlue();
+
+                float[] hsb_start = new float[3];
+                Color.RGBtoHSB(r, g, b, hsb_start);
+
+                float[] hsb_end = {(float)0.116, (float)0.37, 1};
+
                 final int duration = 1000;
-                final int delay = 8000;
                 final int step = 5;
-                final double finalOpacity = 0;
-                double startOpacity = point_opacity;
+                boolean grow = false;
                 int counter = 0;
 
                 try {
-                    animator.sleep(delay);
+                    while(counter < duration || !grow) {
+                        if(counter >= duration) {
+                            grow = !grow;
+                            counter = 0;
+                        }
 
-                    while(counter < duration) {
-                        point_opacity = finalOpacity + (startOpacity - finalOpacity) * (duration - counter) / duration;
+                        float percentage = (float)counter / (float)duration;
+                        if(grow) {
+                            percentage = 1 - percentage;
+                        }
+
+                        float saturation = (hsb_end[1] - hsb_start[1]) * percentage + hsb_start[1];
+                        float brightness = (hsb_end[2] - hsb_start[2]) * percentage + hsb_start[2];
+
+                        figure_color_actual = Color.getHSBColor(hsb_end[0], saturation, brightness);
 
                         counter += step;
                         animator.sleep(step);
                         repaint();
                     }
+                    animator = null;
                 }
                 catch (Exception e) {
                     animator = null;
-                    point_opacity = 1;
                 }
             }
         });
